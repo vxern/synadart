@@ -1,0 +1,13 @@
+name: neural_network
+description: Library for creating neural networks, with a purely Dart implementation.
+version: 0.0.0
+homepage: https://github.com/vxern/neural_network
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies: 
+  extended_math: ^0.0.29+1
+
+dev_dependencies:
+  pedantic: ^1.11.0
