@@ -8,6 +8,10 @@ environment:
 
 dependencies: 
   extended_math: ^0.0.29+1
+  quiver: ^3.0.0
+
+dependency_overrides:
+  quiver: ^3.0.0
 
 dev_dependencies:
   pedantic: ^1.11.0
