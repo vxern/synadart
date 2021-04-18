@@ -5,21 +5,17 @@ import 'package:neural_network/src/neuron.dart';
 class Layer {
   final List<Neuron> neurons;
 
-  const Layer({this.neurons = const []});
-
-  factory Layer.create({
-    required int size,
+  Layer({
+    required int neuronCount,
     required int parentNeuronCount,
 
     required num momentum,
     required num bias,
     required ActivationFunction activationFunction,
-  }) => Layer(
-    neurons: List.generate(size, (_) => Neuron(
-      parentNeuronCount: parentNeuronCount,
-      momentum: momentum,
-      bias: bias,
-      activationFunction: activationFunction,
-    ))
-  );
+  }) : neurons = List.filled(neuronCount, Neuron(
+    parentNeuronCount: parentNeuronCount,
+    momentum: momentum,
+    bias: bias,
+    activationFunction: activationFunction,
+  ));
 }
