@@ -1,6 +1,6 @@
-import 'package:calc/calc.dart';
+import 'dart:math';
 
-typedef ActivationFunction = double Function(double Function() weightedSum);
+typedef ActivationFunction = double Function(double Function());
 
 /// Takes an `ActivationAlgorithm` and returns the `ActivationFunction`
 /// that is defined by the algorithm
