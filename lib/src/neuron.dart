@@ -1,19 +1,30 @@
+import 'dart:math';
+
 import 'package:neural_network/src/activation.dart';
-import 'package:vector_math/vector_math.dart';
+import 'package:neural_network/src/utils/mathematical_operations.dart';
+import 'package:neural_network/src/utils/value_generator.dart';
 
 class Neuron {
-  final Vector2 inputs;
-  final Vector2 weights;
   late final ActivationFunction activation;
 
+  late final List<double> inputs;
+  late final List<double> weights;
+
   Neuron({
-    required this.inputs,
-    required this.weights,
     required ActivationAlgorithm activationAlgorithm,
+    required int connections,
+    List<double> weights = const [],
+    this.inputs = const [],
   }) {
     activation = resolveActivationAlgorithm(ActivationAlgorithm.ReLU);
+
+    if (weights.isEmpty) {
+      final double limit = 1 / sqrt(connections);
+      this.weights = ValueGenerator().generateListWithRandomDoubles(connections, from: -limit, to: limit);
+    }
   }
 
   /// Get the output of this neuron by taking the weighted sum
-  double get output => activation(() => inputs.dot(weights));
+  /// and passing it through the activator function
+  double get output => activation(() => dot(inputs, weights));
 }
