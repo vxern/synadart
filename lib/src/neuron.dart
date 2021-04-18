@@ -11,6 +11,8 @@ class Neuron {
   final num bias;
   final num Function() activate;
 
+  num get output => parentNeuronCount == 0 ? activate() : inputs[0]; 
+
   Neuron({
     this.inputs = const Vector([]),
     this.weights = const Vector([]),
