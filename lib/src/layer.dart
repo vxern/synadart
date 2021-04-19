@@ -17,4 +17,21 @@ class Layer {
       activationAlgorithm: activationAlgorithm,
     ));
   }
+  
+  /// Accept [input] and pass the same input to each neuron
+  /// 
+  /// If [isInputLayer] is true, each neutron in this layer will
+  /// receive its respective input
+  void accept(List<double> input) {
+    if (!isInputLayer) {
+      for (final neuron in neurons) {
+        neuron.inputs = input;
+      }
+      return;
+    }
+
+    for (int index = 0; index < neurons.length; index++) {
+      neurons[index].inputs = [input[index]];
+    }
+  }
 }
