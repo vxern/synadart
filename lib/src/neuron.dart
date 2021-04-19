@@ -12,19 +12,27 @@ class Neuron {
 
   Neuron({
     required ActivationAlgorithm activationAlgorithm,
-    required int connections,
+    required int parentNeuronCount,
     List<double> weights = const [],
     this.inputs = const [],
   }) {
     activation = resolveActivationAlgorithm(ActivationAlgorithm.ReLU);
 
-    if (weights.isEmpty) {
-      final double limit = 1 / sqrt(connections);
-      this.weights = ValueGenerator().generateListWithRandomDoubles(connections, from: -limit, to: limit);
+    if (weights.isNotEmpty) {
+      return;
     }
+
+    if (parentNeuronCount == 0) {
+      return;
+    }
+
+    final double limit = 1 / sqrt(parentNeuronCount);
+    this.weights = ValueGenerator().generateListWithRandomDoubles(parentNeuronCount, from: -limit, to: limit);
   }
 
-  /// Get the output of this neuron by taking the weighted sum
-  /// and passing it through the activator function
-  double get output => activation(() => dot(inputs, weights));
+  /// If this neuron is an input neuron, it should output 
+  /// its sole input that the layer accepts
+  /// Otherwise, it should output the weighted sum of the
+  /// inputs and weights passed through the activation function
+  double get output => inputs.length == 0 ? inputs[0] : activation(() => dot(inputs, weights));
 }
