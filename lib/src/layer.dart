@@ -4,14 +4,15 @@ import 'package:neural_network/src/neuron.dart';
 class Layer {
   late final List<Neuron> neurons;
 
-  final bool isInputLayer;
+  late final bool isInputLayer;
 
   Layer({
     required int parentNeuronCount,
     required int neuronCount,
     required ActivationAlgorithm activationAlgorithm,
-    this.isInputLayer = false,
   }) {
+    isInputLayer = parentNeuronCount == 0;
+
     neurons = List.filled(neuronCount, Neuron(
       parentNeuronCount: parentNeuronCount,
       activationAlgorithm: activationAlgorithm,
