@@ -1,10 +1,7 @@
-name: neural_network
+name: synadart
 description: Library for creating neural networks, with a purely Dart implementation.
-version: 0.0.0
-homepage: https://github.com/vxern/neural_network
+version: 0.0.1
+homepage: https://github.com/vxern/synadart
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-
-dependencies: 
-  vector_math: ^2.1.0
