@@ -48,7 +48,7 @@ class Layer {
     final List<List<double>> newWeightMargins = [];
 
     for (final neuron in neurons) {
-      if (neuron.weights == 0) {
+      if (neuron.weights.length == 0) {
         continue;
       }
 
