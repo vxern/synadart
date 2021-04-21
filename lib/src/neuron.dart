@@ -9,21 +9,22 @@ import 'package:synadart/src/utils/value_generator.dart';
 class Neuron {
   late final ActivationFunction activation;
   late final ActivationFunction activationPrime; // The derivative of the activation function
-  final List<double> weights;
   double learningRate = 0.1; // TODO: Remove hard-coded learning rate
 
-  final List<double> inputs = [];
+  List<double> weights = [];
+  List<double> inputs = [];
 
   /// [activationAlgorithm] - The algorithm that should be used as the activation function
   /// [parentNeuronCount] - How many neurons from the previous layer this neuron is connected to
   /// [weights] - Weights of the connections with neurons from the previous layer
-  Neuron({required ActivationAlgorithm activationAlgorithm, required int parentNeuronCount, this.weights = const []}) {
+  Neuron({required ActivationAlgorithm activationAlgorithm, required int parentNeuronCount, List<double> weights = const []}) {
     assert(parentNeuronCount >= 0, '`parentNeuronCount` must not be negative');
     
     activation = resolveActivationAlgorithm(activationAlgorithm);
     activationPrime = resolveDerivative(activationAlgorithm);
 
     if (weights.isNotEmpty || parentNeuronCount == 0) {
+      this.weights = weights;
       return;
     }
 
@@ -37,17 +38,17 @@ class Neuron {
   void accept({List<double>? inputs, double? input}) {
     if (weights.isNotEmpty) {
       assert(inputs != null, 'Expected multiple inputs but received none');
-      this.inputs.addAll(inputs!);
+      this.inputs = inputs!;
       return;
     }
 
     assert(input != null, 'Expected a single input but received none');
-    this.inputs[0] = input!;
+    this.inputs.insert(0, input!);
   }
   
   /// Adjust this `Neuron`'s weights and return their adjusted values
   List<double> adjust({required double weightMargin}) {
-    final List<double> adjustedWeights = const [];
+    final List<double> adjustedWeights = [];
 
     for (int index = 0; index < weights.length; index++) {
       adjustedWeights.add(weightMargin * weights[index]);

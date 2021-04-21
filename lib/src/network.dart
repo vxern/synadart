@@ -45,7 +45,7 @@ class Network {
 
     print('Errors: $errors');
 
-    for (int index = layers.length; index > 0; index--) {
+    for (int index = layers.length - 1; index > 0; index--) {
       print('Propagating layer #${index}');
       errors = layers[index].propagate(errors);
     }
