@@ -1,5 +1,6 @@
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/neuron.dart';
+import 'package:synadart/src/utils/mathematical_operations.dart';
 
 /// Representation of single column or collection of `neurons`
 class Layer {
@@ -44,23 +45,23 @@ class Layer {
   /// Adjusts weights of each `Neuron` according to its respective [errorMargin] and
   /// returns new [weightMargins] for the previous (we are moving backwards) `Layer`
   List<double> propagate(List<double> weightMargins) {
-    final List<double> newWeightMargins = const [];
+    final List<List<double>> newWeightMargins = [];
 
     for (final neuron in neurons) {
       if (neuron.weights == 0) {
         continue;
       }
 
-      neuron.adjust(weightMargin: weightMargins[0]);
+      newWeightMargins.add(neuron.adjust(weightMargin: weightMargins[0]));
       weightMargins.removeAt(0);
     }
 
-    return newWeightMargins;
+    return newWeightMargins.reduce((a, b) => add(a, b));
   }
 
   /// Returns a list of the neurons' outputs
   List<double> process() {
-    final List<double> response = const [];
+    final List<double> response = [];
 
     for (final neuron in neurons) {
       response.add(neuron.output);
