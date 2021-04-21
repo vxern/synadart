@@ -9,10 +9,10 @@ import 'package:synadart/src/utils/value_generator.dart';
 class Neuron {
   late final ActivationFunction activation;
   late final ActivationFunction activationPrime; // The derivative of the activation function
-  double learningRate = 0.1; // TODO: Remove hard-coded learning rate
+  double learningRate = 0.2; // TODO: Remove hard-coded learning rate
 
   List<double> weights = [];
-  List<double> inputs = [];
+  List<double> inputs = [0];
 
   /// [activationAlgorithm] - The algorithm that should be used as the activation function
   /// [parentNeuronCount] - How many neurons from the previous layer this neuron is connected to
@@ -43,7 +43,7 @@ class Neuron {
     }
 
     assert(input != null, 'Expected a single input but received none');
-    this.inputs.insert(0, input!);
+    this.inputs[0] = input!;
   }
   
   /// Adjust this `Neuron`'s weights and return their adjusted values
@@ -52,7 +52,6 @@ class Neuron {
 
     for (int index = 0; index < weights.length; index++) {
       adjustedWeights.add(weightMargin * weights[index]);
-      print('Current weight: ${weights[index]}');
       weights[index] -= 
         learningRate * 
         -weightMargin * // TODO: Shouldn't this be δC/δa?
