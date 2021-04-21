@@ -1,5 +1,5 @@
-import 'package:neural_network/src/activation.dart';
-import 'package:neural_network/src/neuron.dart';
+import 'package:synadart/src/activation.dart';
+import 'package:synadart/src/neuron.dart';
 
 /// Representation of single column or collection of `neurons`
 class Layer {
@@ -25,9 +25,9 @@ class Layer {
     ));
   }
   
-  /// Accept [inputs] and pass the same input to each neuron
+  /// Accept [inputs] and pass the same input to each `Neuron`
   /// 
-  /// If [isInputLayer] is true, each neutron in this layer will accept an input
+  /// If [isInputLayer] is true, each `Neuron` in this `Layer` will accept an input
   void accept(List<double> inputs) {
     if (!isInputLayer) {
       for (final neuron in neurons) {
@@ -39,5 +39,33 @@ class Layer {
     for (int index = 0; index < neurons.length; index++) {
       neurons[index].accept(input: inputs[index]);
     }
+  }
+
+  /// Adjusts weights of each `Neuron` according to its respective [errorMargin] and
+  /// returns new [weightMargins] for the previous (we are moving backwards) `Layer`
+  List<double> propagate(List<double> weightMargins) {
+    final List<double> newWeightMargins = const [];
+
+    for (final neuron in neurons) {
+      if (neuron.weights == 0) {
+        continue;
+      }
+
+      neuron.adjust(weightMargin: weightMargins[0]);
+      weightMargins.removeAt(0);
+    }
+
+    return newWeightMargins;
+  }
+
+  /// Returns a list of the neurons' outputs
+  List<double> process() {
+    final List<double> response = const [];
+
+    for (final neuron in neurons) {
+      response.add(neuron.output);
+    }
+
+    return response;
   }
 }
