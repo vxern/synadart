@@ -7,7 +7,7 @@ double dot(List<double> a, List<double> b) {
   return result;
 }
 
-/// Add list [b] to list [a]
+/// Adds values in list [b] to list [a]
 List<double> add(List<double> a, List<double> b) {
   final List<double> result = [];
   for (int index = 0; index < a.length; index++) {
@@ -16,7 +16,7 @@ List<double> add(List<double> a, List<double> b) {
   return result;
 }
 
-/// Subtracts list [b] from list [a]
+/// Subtracts values in list [b] from list [a]
 List<double> subtract(List<double> a, List<double> b) {
   final List<double> result = [];
   for (int index = 0; index < a.length; index++) {
