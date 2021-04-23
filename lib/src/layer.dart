@@ -20,7 +20,7 @@ class Layer {
 
     isInputLayer = parentLayerNeuronCount == 0;
 
-    neurons = List.filled(neuronCount, Neuron(
+    this.neurons = List.generate(neuronCount, (_) => Neuron(
       activationAlgorithm: activationAlgorithm,
       parentNeuronCount: parentLayerNeuronCount,
     ));
@@ -48,12 +48,15 @@ class Layer {
     final List<List<double>> newWeightMargins = [];
 
     for (final neuron in neurons) {
-      if (neuron.weights.length == 0) {
+      if (neuron.isInput) {
         continue;
       }
 
-      newWeightMargins.add(neuron.adjust(weightMargin: weightMargins[0]));
-      weightMargins.removeAt(0);
+      newWeightMargins.add(
+        neuron.adjust(
+          weightMargin: weightMargins.removeAt(0)
+        )
+      );
     }
 
     return newWeightMargins.reduce((a, b) => add(a, b));
