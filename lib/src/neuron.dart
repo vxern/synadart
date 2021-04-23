@@ -12,7 +12,9 @@ class Neuron {
   double learningRate = 0.2; // TODO: Remove hard-coded learning rate
 
   List<double> weights = [];
-  List<double> inputs = [0];
+  List<double> inputs = [];
+
+  bool isInput = false;
 
   /// [activationAlgorithm] - The algorithm that should be used as the activation function
   /// [parentNeuronCount] - How many neurons from the previous layer this neuron is connected to
@@ -23,7 +25,13 @@ class Neuron {
     activation = resolveActivationAlgorithm(activationAlgorithm);
     activationPrime = resolveDerivative(activationAlgorithm);
 
-    if (weights.isNotEmpty || parentNeuronCount == 0) {
+    if (parentNeuronCount == 0) {
+      this.isInput = true;
+      this.weights.add(1);
+      return;
+    }
+
+    if (weights.isNotEmpty) {
       this.weights = weights;
       return;
     }
@@ -36,14 +44,17 @@ class Neuron {
   /// If the neuron does not have weights, meaning it is not connected, it will only accept one input.
   /// Otherwise, accept all inputs
   void accept({List<double>? inputs, double? input}) {
-    if (weights.isNotEmpty) {
-      assert(inputs != null, 'Expected multiple inputs but received none');
-      this.inputs = inputs!;
+    if (!isInput && inputs != null) {
+      this.inputs = inputs;
       return;
     }
 
     assert(input != null, 'Expected a single input but received none');
-    this.inputs[0] = input!;
+    if (this.inputs.isNotEmpty) {
+      this.inputs[0] = input!;
+    } else {
+      this.inputs.add(input!);
+    }
   }
   
   /// Adjust this `Neuron`'s weights and return their adjusted values
