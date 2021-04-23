@@ -3,6 +3,8 @@ import 'package:synadart/src/layer.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
 class Network {
+  final Stopwatch stopwatch = Stopwatch();
+
   final List<Layer> layers = [];
 
   /// [activationAlgorithm] - The algorithm that should be used as the activation function of this network's layers
@@ -20,11 +22,13 @@ class Network {
         activationAlgorithm: activationAlgorithm
       ));
     }
+
+    print('Created network of sizes ${layerSizes.join(', ')}');
   }
 
-  /// Processes the input, utilising every layer, and node and returns the network's response
-  List<double> process(List<double> input) {
-    List<double> response = input;
+  /// Processes the input, utilising every layer and node and returns the network's response
+  List<double> process(List<double> inputs) {
+    List<double> response = inputs;
 
     for (final layer in layers) {
       layer.accept(response);
@@ -38,15 +42,9 @@ class Network {
   void propagateBackwards(List<double> input, List<double> expected) {
     final observed = process(input);
 
-    print('Observed: $observed');
-    print('Expected: $expected');
-
     List<double> errors = subtract(expected, observed);
 
-    print('Errors: $errors');
-
     for (int index = layers.length - 1; index > 0; index--) {
-      print('Propagating layer #${index}');
       errors = layers[index].propagate(errors);
     }
   }
@@ -58,10 +56,14 @@ class Network {
     required List<List<double>> expected,
     required int iterations,
   }) {
+    print('Training network with $iterations iterations...');
+    stopwatch.start();
     for (int iteration = 0; iteration < iterations; iteration++) {
       for (int index = 0; index < inputs.length; index++) {
         propagateBackwards(inputs[index], expected[index]);
       }
     }
+    stopwatch.stop();
+    print('Training complete in ${stopwatch.elapsedMilliseconds / 1000}s');
   }
 }
