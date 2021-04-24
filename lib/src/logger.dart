@@ -5,9 +5,7 @@ enum Severity { Debug, Success, Info, Warning, Error }
 class Logger {
   final String name;
 
-  const Logger({
-    required this.name,
-  });
+  const Logger(this.name);
 
   // Assigns a colour to a severity and outputs a message once formatted
   void log(dynamic message, {Severity severity = Severity.Info}) async {
@@ -21,7 +19,7 @@ class Logger {
         pen = AnsiPen()..green();
         break;
       case Severity.Info:
-        pen = AnsiPen()..white();
+        pen = AnsiPen()..cyan();
         break;
       case Severity.Warning:
         pen = AnsiPen()..yellow();
