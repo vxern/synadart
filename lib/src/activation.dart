@@ -4,20 +4,21 @@ typedef ActivationFunction = double Function(double Function());
 
 /// Takes an `ActivationAlgorithm` and returns the `ActivationFunction`
 /// that is defined by the algorithm
-ActivationFunction resolveActivationAlgorithm(ActivationAlgorithm activationAlgorithm) {
+ActivationFunction resolveActivationAlgorithm(
+    ActivationAlgorithm activationAlgorithm) {
   switch (activationAlgorithm) {
-    case ActivationAlgorithm.Sigmoid:
-      return (double Function() weightedSum) => sigmoid(weightedSum()); 
-    case ActivationAlgorithm.ReLU:
-      return (double Function() weightedSum) => relu(weightedSum()); 
+    case ActivationAlgorithm.sigmoid:
+      return (double Function() weightedSum) => sigmoid(weightedSum());
+    case ActivationAlgorithm.reLU:
+      return (double Function() weightedSum) => relu(weightedSum());
   }
 }
 
 ActivationFunction resolveDerivative(ActivationAlgorithm activationAlgorithm) {
   switch (activationAlgorithm) {
-    case ActivationAlgorithm.Sigmoid:
+    case ActivationAlgorithm.sigmoid:
       return (double Function() weightedSum) => sigmoidPrime(weightedSum());
-    case ActivationAlgorithm.ReLU:
+    case ActivationAlgorithm.reLU:
       return (double Function() weightedSum) => reluPrime(weightedSum());
   }
 }
@@ -30,6 +31,6 @@ double reluPrime(double x) => x <= 0 ? 0 : 1;
 
 /// Available algorithms for neuron activation
 enum ActivationAlgorithm {
-  Sigmoid,
-  ReLU,
+  sigmoid,
+  reLU,
 }

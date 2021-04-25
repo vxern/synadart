@@ -78,6 +78,6 @@ class Neuron {
   double get output {
     assert(inputs.isNotEmpty, 'This neuron has not been supplied with any inputs, thus it cannot produce an output');
 
-    return weights.length == 0 ? inputs[0] : activation(() => dot(inputs, weights));
+    return weights.isEmpty ? inputs[0] : activation(() => dot(inputs, weights));
   }
 }

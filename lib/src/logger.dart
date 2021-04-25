@@ -1,6 +1,6 @@
 import 'package:ansicolor/ansicolor.dart';
 
-enum Severity { Debug, Success, Info, Warning, Error }
+enum Severity { debug, success, info, warning, error }
 
 class Logger {
   final String name;
@@ -8,23 +8,23 @@ class Logger {
   const Logger(this.name);
 
   // Assigns a colour to a severity and outputs a message once formatted
-  void log(dynamic message, {Severity severity = Severity.Info}) async {
+  Future log(dynamic message, {Severity severity = Severity.info}) async {
     AnsiPen pen;
 
     switch (severity) {
-      case Severity.Debug:
+      case Severity.debug:
         pen = AnsiPen()..gray();
         break;
-      case Severity.Success:
+      case Severity.success:
         pen = AnsiPen()..green();
         break;
-      case Severity.Info:
+      case Severity.info:
         pen = AnsiPen()..cyan();
         break;
-      case Severity.Warning:
+      case Severity.warning:
         pen = AnsiPen()..yellow();
         break;
-      case Severity.Error:
+      case Severity.error:
         pen = AnsiPen()
           ..red()
           ..yellow();
@@ -37,9 +37,9 @@ class Logger {
   }
 
   // Interfaces for the log command
-  void debug(dynamic message) async => log(message, severity: Severity.Debug);
-  void success(dynamic message) async => log(message, severity: Severity.Success);
-  void info(dynamic message) async => log(message, severity: Severity.Info);
-  void warning(dynamic message) async => log(message, severity: Severity.Warning);
-  void error(dynamic message) async => log(message, severity: Severity.Error);
+  Future debug(dynamic message) async => log(message, severity: Severity.debug);
+  Future success(dynamic message) async => log(message, severity: Severity.success);
+  Future info(dynamic message) async => log(message, severity: Severity.info);
+  Future warning(dynamic message) async => log(message, severity: Severity.warning);
+  Future error(dynamic message) async => log(message, severity: Severity.error);
 }
