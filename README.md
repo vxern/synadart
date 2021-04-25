@@ -13,5 +13,5 @@ import 'package:synadart/synadart.dart';
 Next, we must create a network of our chosen type. Let's create an MLP ( Multi-layer Perceptron ).
 
 ```dart
-final mlp = MultilayerPerceptron(layerSizes: [15, 5, 1], activationAlgorithm: ActivationAlgorithm.sigmoid);
+final mlp = MultilayerPerceptron(layerSizes: [15, 5, 1], activationAlgorithm: ActivationAlgorithm.logistic);
 ```

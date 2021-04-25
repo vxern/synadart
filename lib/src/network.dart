@@ -15,15 +15,14 @@ class Network {
     required ActivationAlgorithm activationAlgorithm,
     required List<int> layerSizes,
   }) {
-
     // Create layers according to the specified layer sizes
     for (int size in layerSizes) {
       layers.add(Layer(
-        // The input layer does not have any parent layer neurons
-        parentLayerNeuronCount: layers.isEmpty ? 0 : layers[layers.length - 1].neurons.length, 
-        neuronCount: size, 
-        activationAlgorithm: activationAlgorithm
-      ));
+          // The input layer does not have any parent layer neurons
+          parentLayerNeuronCount:
+              layers.isEmpty ? 0 : layers[layers.length - 1].neurons.length,
+          neuronCount: size,
+          activationAlgorithm: activationAlgorithm));
     }
   }
 
@@ -68,7 +67,8 @@ class Network {
     }
 
     if (iterations < 1) {
-      log.warning('You cannot train a network without granting it at least one iteration.');
+      log.warning(
+          'You cannot train a network without granting it at least one iteration.');
       return;
     }
 

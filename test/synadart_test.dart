@@ -1,9 +1,22 @@
 import 'package:synadart/synadart.dart';
 
 void main() {
-  final mlp = MultilayerPerceptron(layerSizes: [15, 5, 1], activationAlgorithm: ActivationAlgorithm.sigmoid);
+  final mlp = MultilayerPerceptron(
+      layerSizes: [15, 5, 1],
+      activationAlgorithm: ActivationAlgorithm.logistic);
 
-  final expected = [[0.0],[0.0],[0.0],[0.0],[0.0],[1.0],[0.0],[0.0],[0.0],[0.0]];
+  final expected = [
+    [0.0],
+    [0.0],
+    [0.0],
+    [0.0],
+    [0.0],
+    [1.0],
+    [0.0],
+    [0.0],
+    [0.0],
+    [0.0]
+  ];
 
   final trainingData = [
     '111101101101111'.split('').map(double.parse).toList(),

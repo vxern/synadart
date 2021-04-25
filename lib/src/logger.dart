@@ -32,14 +32,16 @@ class Logger {
     }
 
     message = pen(message.toString());
-    
+
     print('[$name] ~ $message');
   }
 
   // Interfaces for the log command
   Future debug(dynamic message) async => log(message, severity: Severity.debug);
-  Future success(dynamic message) async => log(message, severity: Severity.success);
+  Future success(dynamic message) async =>
+      log(message, severity: Severity.success);
   Future info(dynamic message) async => log(message, severity: Severity.info);
-  Future warning(dynamic message) async => log(message, severity: Severity.warning);
+  Future warning(dynamic message) async =>
+      log(message, severity: Severity.warning);
   Future error(dynamic message) async => log(message, severity: Severity.error);
 }

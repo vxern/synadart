@@ -16,18 +16,21 @@ class Layer {
     required int parentLayerNeuronCount,
     required int neuronCount,
   }) {
-    assert(parentLayerNeuronCount >= 0, '`parentLayerNeuronCount` must not be negative');
+    assert(parentLayerNeuronCount >= 0,
+        '`parentLayerNeuronCount` must not be negative');
 
     isInputLayer = parentLayerNeuronCount == 0;
 
-    this.neurons = List.generate(neuronCount, (_) => Neuron(
-      activationAlgorithm: activationAlgorithm,
-      parentNeuronCount: parentLayerNeuronCount,
-    ));
+    this.neurons = List.generate(
+        neuronCount,
+        (_) => Neuron(
+              activationAlgorithm: activationAlgorithm,
+              parentNeuronCount: parentLayerNeuronCount,
+            ));
   }
-  
+
   /// Accept [inputs] and pass the same input to each `Neuron`
-  /// 
+  ///
   /// If [isInputLayer] is true, each `Neuron` in this `Layer` will accept an input
   void accept(List<double> inputs) {
     if (!isInputLayer) {
@@ -52,11 +55,8 @@ class Layer {
         continue;
       }
 
-      newWeightMargins.add(
-        neuron.adjust(
-          weightMargin: weightMargins.removeAt(0)
-        )
-      );
+      newWeightMargins
+          .add(neuron.adjust(weightMargin: weightMargins.removeAt(0)));
     }
 
     return newWeightMargins.reduce((a, b) => add(a, b));
