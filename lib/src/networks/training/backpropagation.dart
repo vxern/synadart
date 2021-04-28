@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
-/// Mixin that allows networks to perform backpropagation
+/// Extension to `Network` that allows it to train by performing backpropagation
 mixin Backpropagation on Network {
-  /// Perform the `backpropagation` algorithm by comparing the observed with the expected
-  /// values and propagate each layer using the 'errors' or the 'cost'
+  /// Perform the backpropagation algorithm by comparing the observed with the expected
+  /// values, and propagate each layer using the knowledge of the network's `cost`, which
+  /// indicates how bad the network is performing.
   void propagateBackwards(List<double> input, List<double> expected) {
     final observed = process(input);
 
@@ -15,37 +18,36 @@ mixin Backpropagation on Network {
     }
   }
 
-  /// Train the network by passing in [input], their respective [expectedResults]
-  /// as well as the number of iterations to make over these inputs
+  /// Train the network by passing in [inputs], their respective [expected] results
+  /// as well as the number of iterations to make during training
   void train({
-    required List<List<double>> input,
+    required List<List<double>> inputs,
     required List<List<double>> expected,
     required int iterations,
   }) {
-    if (input.isEmpty || expected.isEmpty) {
-      log.warning('[input] and [expected] fields must not be empty.');
-      return;
+    if (inputs.isEmpty || expected.isEmpty) {
+      log.error('Both inputs and expected results must not be empty.');
+      exit(0);
     }
 
-    if (input.length != expected.length) {
-      log.warning('[input] and [expected] fields must be of the same length.');
+    if (inputs.length != expected.length) {
+      log.error('Inputs and expected result lists must be of the same length.');
       return;
     }
 
     if (iterations < 1) {
-      log.warning(
-          'You cannot train a network without granting it at least one iteration.');
+      log.error('You cannot train a network without granting it at least one iteration.');
       return;
     }
 
-    print('Training network with $iterations iterations...');
+    log.info('Training network with $iterations iterations...');
     stopwatch.start();
     for (int iteration = 0; iteration < iterations; iteration++) {
-      for (int index = 0; index < input.length; index++) {
-        propagateBackwards(input[index], expected[index]);
+      for (int index = 0; index < inputs.length; index++) {
+        propagateBackwards(inputs[index], expected[index]);
       }
     }
     stopwatch.stop();
-    print('Training complete in ${stopwatch.elapsedMilliseconds / 1000}s');
+    log.info('Training complete in ${stopwatch.elapsedMilliseconds / 1000}s');
   }
 }

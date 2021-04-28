@@ -35,3 +35,8 @@
 # Version 0.2.5
 
 - Renamed `Multilayer Perceptron` to `Deep Feed-forward`, which should be a more fitting and future-proof name.
+
+# Version 0.3.0
+
+- Updated documentation of `Logger`, `Backpropagation` and `ValueGenerator`.
+- Created `examples` folder with a `recognise_5` example that allows for recognition of the number '5'.
