@@ -2,8 +2,10 @@ import 'package:synadart/synadart.dart';
 
 void main() {
   final mlp = MultilayerPerceptron(
-      layerSizes: [15, 5, 1],
-      activationAlgorithm: ActivationAlgorithm.logistic);
+    layerSizes: [15, 5, 1],
+    activationAlgorithm: ActivationAlgorithm.logistic,
+    learningRate: 0.3,
+  );
 
   final expected = [
     [0.0],

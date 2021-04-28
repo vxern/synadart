@@ -1,5 +1,5 @@
-import 'package:synadart/src/activation.dart';
-import 'package:synadart/src/network.dart';
+import 'package:synadart/src/activation.dart';/*  */
+import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/networks/training/backpropagation.dart';
 
 // More complex perceptron model with one input, one or more hidden and one output layer
@@ -9,5 +9,10 @@ class MultilayerPerceptron extends Network with Backpropagation {
   MultilayerPerceptron({
     required ActivationAlgorithm activationAlgorithm,
     required List<int> layerSizes,
-  }) : super(activationAlgorithm: activationAlgorithm, layerSizes: layerSizes);
+    required double learningRate,
+  }) : super(
+    activationAlgorithm: activationAlgorithm, 
+    layerSizes: layerSizes,
+    learningRate: learningRate,
+  );
 }

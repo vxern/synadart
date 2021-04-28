@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/layer.dart';
 import 'package:synadart/src/logger.dart';
@@ -13,21 +15,22 @@ class Network {
   Network({
     required ActivationAlgorithm activationAlgorithm,
     required List<int> layerSizes,
+    required double learningRate,
   }) {
     if (layerSizes.length < 2) {
-      log.warning(
-          'A network must contain at least two layers, otherwise it is not a network.');
-      return;
+      log.warning('A network must contain at least two layers, otherwise it is not a network.');
+      exit(0);
     }
 
     // Create layers according to the specified layer sizes
     for (int size in layerSizes) {
       layers.add(Layer(
-          // The input layer does not have any parent layer neurons
-          parentLayerNeuronCount:
-              layers.isEmpty ? 0 : layers[layers.length - 1].neurons.length,
-          neuronCount: size,
-          activationAlgorithm: activationAlgorithm));
+        // The input layer does not have any parent layer neurons
+        activationAlgorithm: activationAlgorithm,
+        parentLayerNeuronCount: layers.isEmpty ? 0 : layers[layers.length - 1].neurons.length,
+        neuronCount: size,
+        learningRate: learningRate,
+      ));
     }
   }
 

@@ -1,4 +1,4 @@
-import 'package:synadart/src/network.dart';
+import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
 /// Mixin that allows networks to perform backpropagation

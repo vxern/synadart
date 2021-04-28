@@ -15,8 +15,7 @@ class ValueGenerator {
   }
 
   /// Generates a list of size [size], filled with random double values
-  static List<double> generateListWithRandomDoubles(int size,
-      {double from = 0, double to = 0}) {
+  static List<double> generateListWithRandomDoubles({required int size, double from = 0, double to = 0}) {
     return doubleIterableSync(from: from, to: to).take(size).toList();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:synadart/src/activation.dart';
-import 'package:synadart/src/neuron.dart';
+import 'package:synadart/src/neurons/neuron.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
 /// Representation of single column or collection of `neurons`
@@ -15,6 +15,7 @@ class Layer {
     required ActivationAlgorithm activationAlgorithm,
     required int parentLayerNeuronCount,
     required int neuronCount,
+    required double learningRate,
   }) {
     assert(parentLayerNeuronCount >= 0,
         '`parentLayerNeuronCount` must not be negative');
@@ -22,11 +23,13 @@ class Layer {
     isInputLayer = parentLayerNeuronCount == 0;
 
     this.neurons = List.generate(
-        neuronCount,
-        (_) => Neuron(
-              activationAlgorithm: activationAlgorithm,
-              parentNeuronCount: parentLayerNeuronCount,
-            ));
+      neuronCount,
+      (_) => Neuron(
+        activationAlgorithm: activationAlgorithm,
+        parentNeuronCount: parentLayerNeuronCount,
+        learningRate: learningRate,
+      )
+    );
   }
 
   /// Accept [inputs] and pass the same input to each `Neuron`
