@@ -27,3 +27,7 @@
 
 - Updated documentation of `Network`
 - Replaced `process()` in `Layer` with an `output` getter, simplifying the implementation of getting each `Neuron`'s output
+
+# Version 0.2.4
+
+- Updated documentation of `activation.dart`, having added explanations for the different activation functions
