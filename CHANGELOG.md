@@ -17,4 +17,8 @@
 - Removed FF ( feedforward ) and simple Perceptron networks in favour of an upcoming simpler implementation of basically the same idea, through just one network model.
 - Added [learningRate] as a parameter, and removed the hard-coded value of 0.2.
 - Organised the files slightly
-- Updated documentation of Neurons
+- Updated documentation of `Neuron`
+
+# Version 0.2.2
+
+- Updated documentation of `Layer` and removed a chunk of dead code.

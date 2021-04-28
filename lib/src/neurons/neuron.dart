@@ -31,7 +31,7 @@ class Neuron {
   /// `Neurons`s from the previous `Layer` in order to create an [output].
   List<double> inputs = [];
 
-  /// Specifies whether this `Neuron` belongs to an input layer. This is used to determine the source of
+  /// Specifies whether this `Neuron` belongs to an input `Layer`. This is used to determine the source of
   /// output because a parentless `Neuron` will not have any connections.
   bool isInput = false;
 
@@ -88,7 +88,7 @@ class Neuron {
     return;
   }
 
-  /// 'Accept' a single [input] or multiple [inputs] by assigning them to this `Neuron`'s [inputs].
+  /// Accept a single [input] or multiple [inputs] by assigning them to this `Neuron`'s [inputs].
   void accept({List<double>? inputs, double? input}) {
     if (inputs == null && input == null) {
       log.error('Attempted to accept without any inputs.');
