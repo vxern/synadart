@@ -2,11 +2,10 @@ import 'package:synadart/src/activation.dart';/*  */
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/networks/training/backpropagation.dart';
 
-// More complex perceptron model with one input, one or more hidden and one output layer
-class MultilayerPerceptron extends Network with Backpropagation {
-  /// Takes [layerSizes] and constructs a network using layers of each respective size
-  /// in the list of layer sizes.
-  MultilayerPerceptron({
+/// A more complex feed-forward `Network` model with one or more hidden `Layer`s
+class DeepFeedForward extends Network with Backpropagation {
+  /// Constructs a deep feed-forward `Network`
+  DeepFeedForward({
     required ActivationAlgorithm activationAlgorithm,
     required List<int> layerSizes,
     required double learningRate,

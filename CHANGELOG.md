@@ -25,9 +25,13 @@
 
 # Version 0.2.3
 
-- Updated documentation of `Network`
-- Replaced `process()` in `Layer` with an `output` getter, simplifying the implementation of getting each `Neuron`'s output
+- Updated documentation of `Network`.
+- Replaced `process()` in `Layer` with an `output` getter, simplifying the implementation of getting each `Neuron`'s output.
 
 # Version 0.2.4
 
-- Updated documentation of `activation.dart`, having added explanations for the different activation functions
+- Updated documentation of `activation.dart`, having added explanations for the different activation functions.
+
+# Version 0.2.5
+
+- Renamed `Multilayer Perceptron` to `Deep Feed-forward`, which should be a more fitting and future-proof name.
