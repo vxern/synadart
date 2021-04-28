@@ -22,3 +22,8 @@
 # Version 0.2.2
 
 - Updated documentation of `Layer` and removed a chunk of dead code.
+
+# Version 0.2.3
+
+- Updated documentation of `Network`
+- Replaced `process()` in `Layer` with an `output` getter, simplifying the implementation of getting each `Neuron`'s output

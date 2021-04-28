@@ -15,8 +15,7 @@ class Layer {
   /// accepted by each neuron in this `Layer`.
   late final bool isInput;
 
-  /// Creates a `Layer` with the specified `ActivationAlgorithm` which is then passed to all `Neuron`s this layer
-  /// comprises.
+  /// Creates a `Layer` with the specified `ActivationAlgorithm` which is then passed to and resolved by `Neuron`s.
   /// 
   /// [activationAlgorithm] - The algorithm used for 'activating' this `Layer`'s `Neuron`s, or indicating
   /// how 'active' this `Layer`'s `Neuron`s are by shrinking the weighted sum of a `Neuron`'s [weights] and [inputs]
@@ -25,7 +24,7 @@ class Layer {
   /// [parentNeuronCount] - The amount of 'connections' this `Layer` has, or how many `Neuron`s the previous
   /// `Layer` contains.
   /// 
-  /// This number will be zero if this `Layer` is an input `Layer`.
+  /// This number will equal zero if this `Layer` is an input `Layer`.
   /// 
   /// [neuronCount] - The amount of `Neuron`s this `Layer` has.
   /// 
@@ -79,13 +78,5 @@ class Layer {
   }
 
   /// Returns a list of this `Layer`'s `Neuron`s' outputs
-  List<double> process() {
-    final List<double> response = [];
-
-    for (final neuron in neurons) {
-      response.add(neuron.output);
-    }
-
-    return response;
-  }
+  List<double> get output => List<double>.from(neurons.map<double>((neuron) => neuron.output));
 }
