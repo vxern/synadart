@@ -32,9 +32,10 @@ class Logger {
         break;
     }
 
+    message = message.toString().replaceAll('\n', '\n' + ' ' * (3 + name.length));
     message = pen(message.toString());
 
-    print('[$name] ~ $message');
+    print('[$name] $message');
   }
 
   /// Prints a debug message
