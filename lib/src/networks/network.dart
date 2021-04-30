@@ -1,57 +1,26 @@
-import 'dart:io';
-
-import 'package:synadart/src/activation.dart';
-import 'package:synadart/src/layer.dart';
+import 'package:synadart/src/layers/layer.dart';
 import 'package:synadart/src/logger.dart';
 
-/// Representation of a Neural Network, which contains `Layer`s, each containing a number of `Neuron`s. A `Network` takes
+/// Representation of a Neural Network, which contains `Layers`, each containing a number of `Neurons`. A `Network` takes
 /// an input in the form of several entries and returns an output by processing the data, passing the data through each
 /// layer.
 /// 
 /// `Network`s must have a training mixin in order to be able to learn.
 class Network {
+  /// Used for performance analysis as well as general information logging
   final Stopwatch stopwatch = Stopwatch();
+  /// I don't know how to document this one
   final Logger log = Logger('Network');
 
-  /// List containing the `Layer`s inside this `Network`.
+  /// List containing the `Layers` inside this `Network`.
   final List<Layer> layers = [];
 
-  /// Creates a `Network` with the specified `ActivationAlgorithm` which is then passed to and resolved by `Layer`s.
-  /// 
-  /// [activationAlgorithm] - The algorithm used for 'activating' `Neurons` inside this network, or indicating
-  /// how 'active' this `Network`'s `Neuron`s are by shrinking the weighted sum of each `Neurons`'s [weights] and [inputs]
-  /// to a more controlled range, such as 0 to 1.
-  /// 
-  /// [layerSizes] - Sizes of each respective `Layer` inside this `Network`. [layerSizes] must contain at least two
-  /// entries - the first one being the input `Layer` and the last one being the output `Layer`.
-  /// 
-  /// [learningRate] - A value between 0 (exclusive) and 1 (inclusive) that indicates how sensitive this `Network`'s
-  /// `Neuron`s are to adjustments of their [weights].
-  Network({
-    required ActivationAlgorithm activationAlgorithm,
-    required List<int> layerSizes,
-    required double learningRate,
-  }) {
-    if (layerSizes.length < 2) {
-      log.error('A network must contain at least two layers.');
-      exit(0);
-    }
+  double learningRate;
 
-    if (layerSizes.contains(0)) {
-      log.error('One or more layer size is equal to 0.');
-      exit(0);
-    }
-
-    // Create layers according to the specified layer sizes
-    for (int size in layerSizes) {
-      layers.add(Layer(
-        activationAlgorithm: activationAlgorithm,
-        // If the layer is an input layer, initialise it with 0 parent neurons.
-        // Otherwise, initialise it with the amount the previous layer contains.
-        parentLayerNeuronCount: layers.isEmpty ? 0 : layers[layers.length - 1].neurons.length,
-        neuronCount: size,
-        learningRate: learningRate,
-      ));
+  /// Creates a `Network` with optional `Layers`
+  Network({required this.learningRate, List<Layer>? layers}) {
+    if (layers != null) {
+      addLayers(layers);
     }
   }
 
@@ -66,5 +35,37 @@ class Network {
     }
 
     return output;
+  }
+
+  /// Adds a `Layer` to this `Network`
+  void addLayer(Layer layer) {
+    layer.initialise(
+      parentLayerSize: layers.isEmpty ? 0 : layers[layers.length - 1].size, 
+      learningRate: learningRate
+    );
+
+    layers.add(layer);
+    
+    log.info('Added layer of size ${layer.neurons.length}.');
+  }
+
+  /// Adds a list of `Layers` to this `Network`
+  void addLayers(List<Layer> layers) {
+    for (final layer in layers) {
+      addLayer(layer);
+    }
+  }
+
+  /// Resets the `Network` by removing all `Layers`
+  void reset() {
+    if (layers.isEmpty) {
+      log.warning('Attempted to reset an already empty network');
+      return;
+    }
+
+    stopwatch.reset();
+    layers.clear();
+
+    log.success('Network reset successfully.');
   }
 }
