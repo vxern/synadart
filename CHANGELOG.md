@@ -45,8 +45,15 @@
 
 - Added 5 new activation functions: `SeLU`, `Softplus`, `Softsign`, `Swish` and `Gaussian`.
 - Renamed the `logistic` function to `sigmoid`.
-- Added `abs` function for obtaining the absolute of a value to `mathematical_operations`
+- Added `abs` function for obtaining the absolute of a value to `mathematical_operations`.
 
 # Version 0.3.2
 
-- Added simple feed-forward network model
+- Added simple feed-forward network model.
+
+# Version 0.4.0
+
+- Code organisation.
+- Replacing network types such as `feed-forward` or `deep feed-forward` with a simple `Sequential`.
+- Moved focus from `Network` to `Layer`, so that different layers can be added to a `Network`, rather than creating new types of networks, and limiting the user to a preset model.
+- Updated example code and README.md
