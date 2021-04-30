@@ -40,3 +40,9 @@
 
 - Updated documentation of `Logger`, `Backpropagation` and `ValueGenerator`.
 - Created `examples` folder with a `recognise_5` example that allows for recognition of the number '5'.
+
+# Version 0.3.1
+
+- Added 5 new activation functions: `SeLU`, `Softplus`, `Softsign`, `Swish` and `Gaussian`.
+- Renamed the `logistic` function to `sigmoid`.
+- Added `abs` function for obtaining the absolute of a value to `mathematical_operations`
