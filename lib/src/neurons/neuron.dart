@@ -125,12 +125,5 @@ class Neuron {
   /// If this `Neuron` is an 'input' `Neuron`, it should output its sole input because it has no parent neurons
   /// and therefore no weights of connections.
   /// Otherwise, it should output the weighted sum of the [inputs] and [weights], passed through the [activationFunction].
-  double get output {
-    if (inputs.isEmpty) {
-      log.error('Attempted to produce an output with no inputs.');
-      exit(0);
-    }
-
-    return weights.isEmpty ? inputs[0] : activation(() => dot(inputs, weights));
-  }
+  double get output => weights.isEmpty ? inputs[0] : activation(() => dot(inputs, weights));
 }
