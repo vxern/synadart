@@ -40,14 +40,16 @@ mixin Backpropagation on Network {
       return;
     }
 
-    log.info('Training network with $iterations iterations...');
-    stopwatch.start();
     for (int iteration = 0; iteration < iterations; iteration++) {
+      stopwatch.start();
       for (int index = 0; index < inputs.length; index++) {
         propagateBackwards(inputs[index], expected[index]);
       }
+      stopwatch.stop();
+      if (iteration % 500 == 0) {
+        log.info('Iterations: $iteration/$iterations ~ ETA: ${log.secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}');
+      }
+      stopwatch.reset();
     }
-    stopwatch.stop();
-    log.info('Training complete in ${stopwatch.elapsedMilliseconds / 1000}s');
   }
 }
