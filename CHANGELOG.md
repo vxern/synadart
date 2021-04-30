@@ -46,3 +46,7 @@
 - Added 5 new activation functions: `SeLU`, `Softplus`, `Softsign`, `Swish` and `Gaussian`.
 - Renamed the `logistic` function to `sigmoid`.
 - Added `abs` function for obtaining the absolute of a value to `mathematical_operations`
+
+# Version 0.3.2
+
+- Added simple feed-forward network model
