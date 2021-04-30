@@ -1,51 +1,68 @@
+import 'dart:io';
+
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/logger.dart';
 import 'package:synadart/src/neurons/neuron.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
-/// Representation of a single `Layer` inside a `Network` - a 'column' of `Neuron`s which can be
+/// Representation of a single `Layer` inside a `Network` - a 'column' of `Neurons` which can be
 /// manipulated through accepting new data, propagated through training or simply processed the output of.
 class Layer {
+  /// I don't know how to document this one
   final Logger log = Logger('Layer');
 
+  /// The `ActivationAlgorithm` used for activating `Neurons` inside this `Layer`.
+  final ActivationAlgorithm activation;
+
   /// List containing the `Neuron`s inside this `Layer`.
-  late final List<Neuron> neurons;
+  final List<Neuron> neurons = [];
+
+  /// The amount of `Neurons` this `Layer` comprises.
+  final int size;
 
   /// Specifies whether this `Layer` is an input `Layer`. This is used to determine how inputs should be
   /// accepted by each neuron in this `Layer`.
-  late final bool isInput;
+  bool isInput = false;
 
   /// Creates a `Layer` with the specified `ActivationAlgorithm` which is then passed to and resolved by `Neuron`s.
   /// 
-  /// [activationAlgorithm] - The algorithm used for 'activating' this `Layer`'s `Neuron`s, or indicating
+  /// [size] - The amount of `Neuron`s this `Layer` has.
+  /// 
+  /// [activation] - The algorithm used for 'activating' this `Layer`'s `Neuron`s, or indicating
   /// how 'active' this `Layer`'s `Neuron`s are by shrinking the weighted sum of a `Neuron`'s [weights] and [inputs]
   /// to a more controlled range, such as 0 to 1.
+  Layer({
+    required this.size,
+    required this.activation,
+  }) {
+    if (size < 1) {
+      log.error('A layer must contain at least one neuron.');
+      exit(0);
+    }
+  }
+
+  /// Initialises this `Layer` with parameters passed in by the `Network`
   /// 
   /// [parentNeuronCount] - The amount of 'connections' this `Layer` has, or how many `Neuron`s the previous
   /// `Layer` contains.
   /// 
   /// This number will equal zero if this `Layer` is an input `Layer`.
   /// 
-  /// [neuronCount] - The amount of `Neuron`s this `Layer` has.
-  /// 
   /// [learningRate] - A value between 0 (exclusive) and 1 (inclusive) that indicates how sensitive
   /// this `Layer`'s `Neuron`s are to adjustments of their [weights].
-  Layer({
-    required ActivationAlgorithm activationAlgorithm,
-    required int parentLayerNeuronCount,
-    required int neuronCount,
+  void initialise({
+    required int parentLayerSize,
     required double learningRate,
   }) {
-    isInput = parentLayerNeuronCount == 0;
+    isInput = parentLayerSize == 0;
 
-    this.neurons = List.generate(
-      neuronCount,
+    neurons.addAll(List.generate(size,
       (_) => Neuron(
-        activationAlgorithm: activationAlgorithm,
-        parentNeuronCount: parentLayerNeuronCount,
+        activationAlgorithm: activation,
+        parentNeuronCount: parentLayerSize,
         learningRate: learningRate,
       )
-    );
+    ));
   }
 
   /// Accept a single [input] or multiple [inputs] by assigning them to every of this `Layer`'s `Neuron`'s [inputs].
