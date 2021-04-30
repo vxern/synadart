@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:synadart/src/activation.dart';/*  */
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/networks/training/backpropagation.dart';
@@ -13,5 +15,10 @@ class DeepFeedForward extends Network with Backpropagation {
     activationAlgorithm: activationAlgorithm, 
     layerSizes: layerSizes,
     learningRate: learningRate,
-  );
+  ) {
+    if (layerSizes.length < 3) {
+      log.error('A deep feed-forward network model must have at least one hidden layer.');
+      exit(0);
+    }
+  }
 }

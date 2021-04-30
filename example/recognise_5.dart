@@ -3,7 +3,7 @@ import 'package:synadart/synadart.dart';
 void main() {
   final network = DeepFeedForward(
     layerSizes: [15, 5, 1],
-    activationAlgorithm: ActivationAlgorithm.logistic,
+    activationAlgorithm: ActivationAlgorithm.sigmoid,
     learningRate: 0.3,
   );
 

@@ -24,3 +24,6 @@ List<double> subtract(List<double> a, List<double> b) {
   }
   return result;
 }
+
+/// Gets the absolute value of [x]
+double abs(double x) => x < 0 ? -x : x;
