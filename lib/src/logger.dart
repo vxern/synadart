@@ -8,6 +8,7 @@ class Logger {
   /// with a `Network` prefix.
   final String name;
 
+  /// Construct logger with a name of its owner
   const Logger(this.name);
 
   /// Assigns a colour to the severity of the message and outputs a coloured message once formatted
@@ -36,6 +37,28 @@ class Logger {
     message = pen(message.toString());
 
     print('[$name] $message');
+  }
+
+  /// Converts seconds to an Estimated Time of Arrival string
+  String secondsToETA(int seconds) {
+    String eta = '';
+
+    // Break down the total number of seconds into larger units of time
+    int minutes = seconds ~/ 60;
+    // Deduct the number of seconds that have been converted into larger units of time
+    seconds -= minutes * 60;
+
+    if (minutes < 10) {
+      eta += '0';
+    }
+    eta += '$minutes:';
+    
+    if (seconds < 10) {
+      eta += '0';
+    }
+    eta += '$seconds';
+
+    return eta;
   }
 
   /// Prints a debug message
