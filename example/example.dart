@@ -1,22 +1,27 @@
-import 'package:synadart/src/layers/dense.dart';
+import 'package:synadart/src/layers/core/dense.dart';
 import 'package:synadart/synadart.dart';
 
 void main() {
-  final network = Sequential(learningRate: 0.3);
+  final network = Sequential(learningRate: 0.1);
   
   network.addLayer(Dense(
     size: 15,
-    activationAlgorithm: ActivationAlgorithm.sigmoid,
+    activation: ActivationAlgorithm.sigmoid,
   ));
 
   network.addLayer(Dense(
     size: 5,
-    activationAlgorithm: ActivationAlgorithm.sigmoid,
+    activation: ActivationAlgorithm.sigmoid,
+  ));
+
+  network.addLayer(Dense(
+    size: 3,
+    activation: ActivationAlgorithm.sigmoid,
   ));
 
   network.addLayer(Dense(
     size: 1,
-    activationAlgorithm: ActivationAlgorithm.sigmoid,
+    activation: ActivationAlgorithm.sigmoid,
   ));
 
 // We are expecting to get the number '5'
@@ -64,9 +69,9 @@ final testData = [
   network.train(inputs: trainingData, expected: expected, iterations: 5000);
 
   print('Confidence in recognising a 5: ${network.process(numberFive)}');
-for (final test in testData) {
-  print('Confidence in recognising a distorted 5: ${network.process(test)}');
-}
+  for (final test in testData) {
+    print('Confidence in recognising a distorted 5: ${network.process(test)}');
+  }
   print('Is 0 a 5? ${network.process(trainingData[0])}');
   print('Is 8 a 5? ${network.process(trainingData[8])}');
   print('Is 3 a 5? ${network.process(trainingData[3])}');
