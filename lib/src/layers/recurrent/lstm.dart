@@ -14,7 +14,9 @@ class LSTM extends Layer {
   /// Construct a LSTM layer
   /// 
   /// [size] - How many `Neurons` this `LSTM` has
+  /// 
   /// [activation] - `ActivationAlgorithm` used for `Neuron` activation
+  /// 
   /// [recurrentActivation] - `ActivationAlgorithm` used for `LSTM` activation
   LSTM({
     required int size,

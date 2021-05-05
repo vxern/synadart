@@ -44,9 +44,16 @@ class Logger {
     String eta = '';
 
     // Break down the total number of seconds into larger units of time
+    int hours = seconds ~/ (60 * 60);
+    seconds -= hours * (60 * 60);
     int minutes = seconds ~/ 60;
-    // Deduct the number of seconds that have been converted into larger units of time
     seconds -= minutes * 60;
+
+    // Append a zero to single-digit time representations
+    if (hours < 10) {
+      eta += '0';
+    }
+    eta += '$hours:';
 
     if (minutes < 10) {
       eta += '0';

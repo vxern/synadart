@@ -20,10 +20,17 @@ mixin Backpropagation on Network {
 
   /// Train the network by passing in [inputs], their respective [expected] results
   /// as well as the number of iterations to make during training
+  /// 
+  /// [inputs] - The values we pass into the `Network`
+  /// 
+  /// [expected] - What the `Network` is expected to output
+  /// 
+  /// [iterations] - How many times the `Network` should train, given the inputs and expected values
   void train({
     required List<List<double>> inputs,
     required List<List<double>> expected,
     required int iterations,
+    bool quiet = false,
   }) {
     if (inputs.isEmpty || expected.isEmpty) {
       log.error('Both inputs and expected results must not be empty.');
@@ -40,6 +47,16 @@ mixin Backpropagation on Network {
       return;
     }
 
+    // Perform backpropagation without any additional metrics overhead
+    if (quiet) {
+      for (int iteration = 0; iteration < iterations; iteration++) {
+        for (int index = 0; index < inputs.length; index++) {
+          propagateBackwards(inputs[index], expected[index]);
+        }
+      }
+      return;
+    }
+    
     for (int iteration = 0; iteration < iterations; iteration++) {
       stopwatch.start();
       for (int index = 0; index < inputs.length; index++) {
