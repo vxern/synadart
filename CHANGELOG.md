@@ -57,3 +57,12 @@
 - Replacing network types such as `feed-forward` or `deep feed-forward` with a simple `Sequential`.
 - Moved focus from `Network` to `Layer`, so that different layers can be added to a `Network`, rather than creating new types of networks, and limiting the user to a preset model.
 - Updated example code and README.md
+
+# Version 0.4.1
+
+- Updated documentation
+
+# Version 0.4.1+1
+
+- Refactoring code
+- Removing `logger.dart` in favour of `Sprint`
