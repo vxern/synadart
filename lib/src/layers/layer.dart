@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:sprint/sprint.dart';
+
 import 'package:synadart/src/activation.dart';
-import 'package:synadart/src/logger.dart';
 import 'package:synadart/src/neurons/neuron.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
@@ -9,7 +10,7 @@ import 'package:synadart/src/utils/mathematical_operations.dart';
 /// manipulated through accepting new data, propagated through training or simply processed the output of.
 class Layer {
   /// I don't know how to document this one
-  final Logger log = Logger('Layer');
+  final Sprint log = Sprint('Layer');
 
   /// The `ActivationAlgorithm` used for activating `Neurons` inside this `Layer`.
   final ActivationAlgorithm activation;
@@ -25,9 +26,9 @@ class Layer {
   bool isInput = false;
 
   /// Creates a `Layer` with the specified `ActivationAlgorithm` which is then passed to and resolved by `Neuron`s.
-  /// 
+  ///
   /// [size] - The amount of `Neuron`s this `Layer` has.
-  /// 
+  ///
   /// [activation] - The algorithm used for 'activating' this `Layer`'s `Neuron`s, or indicating
   /// how 'active' this `Layer`'s `Neuron`s are by shrinking the weighted sum of a `Neuron`'s [weights] and [inputs]
   /// to a more controlled range, such as 0 to 1.
@@ -42,12 +43,12 @@ class Layer {
   }
 
   /// Initialises this `Layer` with parameters passed in by the `Network`
-  /// 
+  ///
   /// [parentNeuronCount] - The amount of 'connections' this `Layer` has, or how many `Neuron`s the previous
   /// `Layer` contains.
-  /// 
+  ///
   /// This number will equal zero if this `Layer` is an input `Layer`.
-  /// 
+  ///
   /// [learningRate] - A value between 0 (exclusive) and 1 (inclusive) that indicates how sensitive
   /// this `Layer`'s `Neuron`s are to adjustments of their [weights].
   void initialise({
@@ -56,12 +57,13 @@ class Layer {
   }) {
     isInput = parentLayerSize == 0;
 
-    neurons.addAll(List.generate(size,
+    neurons.addAll(Iterable.generate(
+      size,
       (_) => Neuron(
         activationAlgorithm: activation,
         parentNeuronCount: parentLayerSize,
         learningRate: learningRate,
-      )
+      ),
     ));
   }
 
@@ -88,12 +90,14 @@ class Layer {
     final List<List<double>> newWeightMargins = [];
 
     for (final neuron in neurons) {
-      newWeightMargins.add(neuron.adjust(weightMargin: weightMargins.removeAt(0)));
+      newWeightMargins
+          .add(neuron.adjust(weightMargin: weightMargins.removeAt(0)));
     }
 
     return newWeightMargins.reduce((a, b) => add(a, b));
   }
 
   /// Returns a list of this `Layer`'s `Neuron`s' outputs
-  List<double> get output => List<double>.from(neurons.map<double>((neuron) => neuron.output));
+  List<double> get output =>
+      List<double>.from(neurons.map<double>((neuron) => neuron.output));
 }

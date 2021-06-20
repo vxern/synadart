@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
+import 'package:synadart/src/utils/utils.dart';
 
 /// Extension to `Network` that allows it to train by performing backpropagation
 mixin Backpropagation on Network {
@@ -20,11 +21,11 @@ mixin Backpropagation on Network {
 
   /// Train the network by passing in [inputs], their respective [expected] results
   /// as well as the number of iterations to make during training
-  /// 
+  ///
   /// [inputs] - The values we pass into the `Network`
-  /// 
+  ///
   /// [expected] - What the `Network` is expected to output
-  /// 
+  ///
   /// [iterations] - How many times the `Network` should train, given the inputs and expected values
   void train({
     required List<List<double>> inputs,
@@ -43,7 +44,8 @@ mixin Backpropagation on Network {
     }
 
     if (iterations < 1) {
-      log.error('You cannot train a network without granting it at least one iteration.');
+      log.error(
+          'You cannot train a network without granting it at least one iteration.');
       return;
     }
 
@@ -56,7 +58,7 @@ mixin Backpropagation on Network {
       }
       return;
     }
-    
+
     for (int iteration = 0; iteration < iterations; iteration++) {
       stopwatch.start();
       for (int index = 0; index < inputs.length; index++) {
@@ -64,7 +66,8 @@ mixin Backpropagation on Network {
       }
       stopwatch.stop();
       if (iteration % 500 == 0) {
-        log.info('Iterations: $iteration/$iterations ~ ETA: ${log.secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}');
+        log.info(
+            'Iterations: $iteration/$iterations ~ ETA: ${secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}');
       }
       stopwatch.reset();
     }

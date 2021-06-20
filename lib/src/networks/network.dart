@@ -1,16 +1,17 @@
+import 'package:sprint/sprint.dart';
+
 import 'package:synadart/src/layers/layer.dart';
-import 'package:synadart/src/logger.dart';
 
 /// Representation of a Neural Network, which contains `Layers`, each containing a number of `Neurons`. A `Network` takes
 /// an input in the form of several entries and returns an output by processing the data, passing the data through each
 /// layer.
-/// 
+///
 /// `Network`s must have a training mixin in order to be able to learn.
 class Network {
   /// Used for performance analysis as well as general information logging
   final Stopwatch stopwatch = Stopwatch();
-  /// I don't know how to document this one
-  final Logger log = Logger('Network');
+
+  final Sprint log = Sprint('Network');
 
   /// List containing the `Layers` inside this `Network`.
   final List<Layer> layers = [];
@@ -40,12 +41,11 @@ class Network {
   /// Adds a `Layer` to this `Network`
   void addLayer(Layer layer) {
     layer.initialise(
-      parentLayerSize: layers.isEmpty ? 0 : layers[layers.length - 1].size, 
-      learningRate: learningRate
-    );
+        parentLayerSize: layers.isEmpty ? 0 : layers[layers.length - 1].size,
+        learningRate: learningRate);
 
     layers.add(layer);
-    
+
     log.info('Added layer of size ${layer.neurons.length}.');
   }
 
