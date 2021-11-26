@@ -37,7 +37,7 @@ class Layer {
     required this.activation,
   }) {
     if (size < 1) {
-      log.error('A layer must contain at least one neuron.');
+      log.severe('A layer must contain at least one neuron.');
       exit(0);
     }
   }

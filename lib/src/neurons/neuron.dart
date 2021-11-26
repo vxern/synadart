@@ -74,7 +74,7 @@ class Neuron {
     }
 
     if (weights.length != parentNeuronCount) {
-      log.error(
+      log.severe(
           'The amount of weights supplied to this neuron does not match the amount'
           'of connections to neurons in the parent layer.');
       exit(0);
@@ -87,7 +87,7 @@ class Neuron {
   /// Accept a single [input] or multiple [inputs] by assigning them to this `Neuron`'s [inputs].
   void accept({List<double>? inputs, double? input}) {
     if (inputs == null && input == null) {
-      log.error('Attempted to accept without any inputs.');
+      log.severe('Attempted to accept without any inputs.');
       exit(0);
     }
 

@@ -34,17 +34,17 @@ mixin Backpropagation on Network {
     bool quiet = false,
   }) {
     if (inputs.isEmpty || expected.isEmpty) {
-      log.error('Both inputs and expected results must not be empty.');
+      log.severe('Both inputs and expected results must not be empty.');
       exit(0);
     }
 
     if (inputs.length != expected.length) {
-      log.error('Inputs and expected result lists must be of the same length.');
+      log.severe('Inputs and expected result lists must be of the same length.');
       return;
     }
 
     if (iterations < 1) {
-      log.error(
+      log.severe(
           'You cannot train a network without granting it at least one iteration.');
       return;
     }
