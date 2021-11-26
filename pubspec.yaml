@@ -1,7 +1,7 @@
 publish_to: https://pub.dev
 
 name: synadart
-version: 0.4.1+1
+version: 0.4.2
 
 description: Library for creating neural networks, with a purely Dart implementation.
 
