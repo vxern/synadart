@@ -1,3 +1,7 @@
+# 0.4.2+1
+
+- Updated package description.
+
 # 0.4.2
 
 - Updated `sprint` version from `1.0.0+1` to `1.0.2+3`.
