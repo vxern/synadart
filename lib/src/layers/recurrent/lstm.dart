@@ -1,49 +1,55 @@
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/layers/layer.dart';
 
-/// `Layer` in which all `Neurons` are connected to all `Neurons` in the previous `Layer`
+/// A `Layer` in which every `Neuron` is connected to every other `Neuron` in
+/// the preceding `Layer`, with additional memory/retention capabilities.
 class LSTM extends Layer {
-  /// Function used for LSTM activation
-  late final ActivationFunction recurrentActivation;
+  /// Activation function of the LSTM layer.
+  late final ActivationFunction recurrenceActivation;
 
-  /// Memory carried across all `Neurons` inside the layer
+  /// Memory carried across all `Neurons` inside the layer.
   double longTermMemory = 1;
-  /// Memory carried over from the current `Neuron` to the next `Neuron`
+
+  /// Memory carried over from the current `Neuron` to the following `Neuron`.
   double shortTermMemory = 1;
 
-  /// Construct a LSTM layer
-  /// 
-  /// [size] - How many `Neurons` this `LSTM` has
-  /// 
-  /// [activation] - `ActivationAlgorithm` used for `Neuron` activation
-  /// 
-  /// [recurrentActivation] - `ActivationAlgorithm` used for `LSTM` activation
+  /// Construct an LSTM layer.
+  ///
+  /// [size] - How many `Neurons` this `LSTM` has.
+  ///
+  /// [activation] - Algorithm used to activate `Neurons` in this `Layer`.
+  ///
+  /// [recurrenceActivation] - Algorithm used to activate recurrence
+  /// connections.
   LSTM({
     required int size,
     required ActivationAlgorithm activation,
-    required ActivationAlgorithm recurrentActivation,
+    required ActivationAlgorithm recurrenceActivation,
   }) : super(
-    size: size,
-    activation: activation,
-  ) {
-    this.recurrentActivation = resolveActivationAlgorithm(recurrentActivation);
+          size: size,
+          activation: activation,
+        ) {
+    this.recurrenceActivation =
+        resolveActivationAlgorithm(recurrenceActivation);
   }
 
-  /// Obtain the output by applying the recurrent memory algorithm
+  /// Obtain the output by applying the recurrent memory algorithm.
   @override
   List<double> get output {
-    final List<double> output = [];
+    final output = <double>[];
 
     for (final neuron in neurons) {
-      double neuronOutput = neuron.output;
-      double hiddenActivationComponent = neuron.activation(() => neuronOutput);
-      double hiddenRecurrentComponent = recurrentActivation(() => neuronOutput);
+      final neuronOutput = neuron.output;
+      final hiddenActivationComponent = neuron.activation(() => neuronOutput);
+      final hiddenRecurrentComponent = recurrenceActivation(() => neuronOutput);
       // Forget gate
       longTermMemory = hiddenActivationComponent * longTermMemory;
       // Update gate
-      longTermMemory = (hiddenActivationComponent * hiddenRecurrentComponent) + longTermMemory;
+      longTermMemory = (hiddenActivationComponent * hiddenRecurrentComponent) +
+          longTermMemory;
       // Output gate
-      double stateRecurrentComponent = recurrentActivation(() => longTermMemory);
+      final stateRecurrentComponent =
+          recurrenceActivation(() => longTermMemory);
       shortTermMemory = hiddenActivationComponent * stateRecurrentComponent;
       output.add(shortTermMemory);
     }

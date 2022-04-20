@@ -1,6 +1,8 @@
 # synadart
 
-The `synadart` library can be used to create neural networks of any complexity, as well as learn from the source code by studying its extremely clean implementation.
+The `synadart` library can be used to create neural networks of any complexity,
+as well as learn from the source code by studying its extremely clean
+implementation.
 
 ## Launching our first network
 
@@ -10,25 +12,31 @@ To begin using the `synadart`, we must first import it into our project:
 import 'package:synadart/synadart.dart';
 ```
 
-Next, we must create a network of our chosen type. Let's create a sequential network, in which every layer has one input and one output tensor. This should be pretty easy:
+Next, we must create a network of our chosen type. Let's create a sequential
+network, in which every layer has one input and one output tensor. This should
+be pretty easy:
 
 ```dart
 final network = Sequential(learningRate: 0.3);
 ```
 
-Our network is currently empty; it contains no layers and therefore no neurons. Let's add three layers; the input layer, one hidden layer and the output layer:
+Our network is currently empty; it contains no layers and therefore no neurons.
+Let's add three layers; the input layer, one hidden layer and the output layer:
 
 ```dart
 network.addLayers([
-    Dense(15, activationAlgorithm: ActivationAlgorithm.sigmoid),
-    Dense(5, activationAlgorithm: ActivationAlgorithm.sigmoid),
-    Dense(1, activationAlgorithm: ActivationAlgorithm.sigmoid),
+  Dense(15, activationAlgorithm: ActivationAlgorithm.sigmoid),
+  Dense(5, activationAlgorithm: ActivationAlgorithm.sigmoid),
+  Dense(1, activationAlgorithm: ActivationAlgorithm.sigmoid),
 ]);
 ```
 
-Now that our network has some structure to it, we can begin using it.. No, not quite yet. Our network is still not trained, and has no clue what it is doing. Time to train it.
+Now that our network has some structure to it, we can begin using it.. No, not
+quite yet. Our network is still not trained, and has no clue what it is doing.
+Time to train it.
 
-Firstly, we will create a list of *expected* values, i.e. *values we are expecting the network to output*. Here, we are expecting to get the number '5'.
+Firstly, we will create a list of _expected_ values, i.e. _values we are
+expecting the network to output_. Here, we are expecting to get the number '5'.
 
 ```dart
 final expected = [
@@ -45,9 +53,12 @@ final expected = [
 ];
 ```
 
-Fantastic, we are now expecting our infantile network to magically output a number 5, not having taught it a thing. Oh, right - that's where the training data part comes in!
+Fantastic, we are now expecting our infantile network to magically output a
+number 5, not having taught it a thing. Oh, right - that's where the training
+data part comes in!
 
-We must now tell the network what each of our expected output values is associated with. Let's teach it some numbers:
+We must now tell the network what each of our expected output values is
+associated with. Let's teach it some numbers:
 
 ```dart
 final trainingData = [
@@ -64,15 +75,19 @@ final trainingData = [
 ];
 ```
 
-Now that we granted our network a grand total of 10 numbers to learn, we can begin training the network using the values we've set up:
+Now that we granted our network a grand total of 10 numbers to learn, we can
+begin training the network using the values we've set up:
 
 ```dart
 network.train(inputs: trainingData, expected: expected, iterations: 5000);
 ```
 
-Wonderful! We've trained our network using the pixel representation of number images, and our network is now able to recognise the number '5' with relative confidence. The last step is to test our network's capabilities ourselves.
+Wonderful! We've trained our network using the pixel representation of number
+images, and our network is now able to recognise the number '5' with relative
+confidence. The last step is to test our network's capabilities ourselves.
 
-Let's give our network a couple pixel representations of distorted images of the number '5':
+Let's give our network a couple pixel representations of distorted images of the
+number '5':
 
 ```dart
 final testData = [

@@ -1,7 +1,7 @@
 /// Calculates the dot product of two lists
 double dot(List<double> a, List<double> b) {
-  double result = 0;
-  for (int index = 0; index < a.length; index++) {
+  var result = 0.0;
+  for (var index = 0; index < a.length; index++) {
     result += a[index] * b[index];
   }
   return result;
@@ -9,8 +9,8 @@ double dot(List<double> a, List<double> b) {
 
 /// Adds values in list [b] to list [a]
 List<double> add(List<double> a, List<double> b) {
-  final List<double> result = [];
-  for (int index = 0; index < a.length; index++) {
+  final result = <double>[];
+  for (var index = 0; index < a.length; index++) {
     result.add(a[index] + b[index]);
   }
   return result;
@@ -18,8 +18,8 @@ List<double> add(List<double> a, List<double> b) {
 
 /// Subtracts values in list [b] from list [a]
 List<double> subtract(List<double> a, List<double> b) {
-  final List<double> result = [];
-  for (int index = 0; index < a.length; index++) {
+  final result = <double>[];
+  for (var index = 0; index < a.length; index++) {
     result.add(a[index] - b[index]);
   }
   return result;

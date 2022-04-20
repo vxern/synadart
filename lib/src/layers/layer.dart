@@ -6,32 +6,33 @@ import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/neurons/neuron.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
 
-/// Representation of a single `Layer` inside a `Network` - a 'column' of `Neurons` which can be
-/// manipulated through accepting new data, propagated through training or simply processed the output of.
+/// Representation of a single `Layer` inside a `Network`, more accurately a
+/// 'column' of `Neurons` that can be manipulated through accepting new data and
+/// trained.
 class Layer {
-  /// I don't know how to document this one
+  /// `Sprint` instance for logging messages.
   final Sprint log = Sprint('Layer');
 
-  /// The `ActivationAlgorithm` used for activating `Neurons` inside this `Layer`.
+  /// The algorithm used for activating `Neurons`.
   final ActivationAlgorithm activation;
 
-  /// List containing the `Neuron`s inside this `Layer`.
+  /// The `Neurons` part of this `Layer`.
   final List<Neuron> neurons = [];
 
-  /// The amount of `Neurons` this `Layer` comprises.
+  /// The number of `Neurons` this `Layer` comprises.
   final int size;
 
-  /// Specifies whether this `Layer` is an input `Layer`. This is used to determine how inputs should be
-  /// accepted by each neuron in this `Layer`.
+  /// Specifies whether or not this `Layer` is an input `Layer`.  This is used
+  /// to determine how inputs should be accepted by each neuron in this `Layer`.
   bool isInput = false;
 
-  /// Creates a `Layer` with the specified `ActivationAlgorithm` which is then passed to and resolved by `Neuron`s.
+  /// Creates a `Layer` with the specified activation algorithm that is then
+  /// passed to and resolved by `Neurons`.
   ///
-  /// [size] - The amount of `Neuron`s this `Layer` has.
+  /// [size] - The number of `Neurons` this `Layer` is to house.
   ///
-  /// [activation] - The algorithm used for 'activating' this `Layer`'s `Neuron`s, or indicating
-  /// how 'active' this `Layer`'s `Neuron`s are by shrinking the weighted sum of a `Neuron`'s [weights] and [inputs]
-  /// to a more controlled range, such as 0 to 1.
+  /// [activation] - The algorithm used for determining how active `Neurons` are
+  /// contained within this layer.
   Layer({
     required this.size,
     required this.activation,
@@ -42,15 +43,17 @@ class Layer {
     }
   }
 
-  /// Initialises this `Layer` with parameters passed in by the `Network`
+  /// Initialises this `Layer` using the parameters passed into it by the
+  /// `Network` in which the `Layer` is housed.
   ///
-  /// [parentNeuronCount] - The amount of 'connections' this `Layer` has, or how many `Neuron`s the previous
-  /// `Layer` contains.
+  /// [parentLayerSize] - The number of 'connections' this `Layer` is in
+  /// disposition of.  In other words, the number of `Neurons` the previous
+  /// `Layer` houses.  This number be equal to zero if this `Layer` is an input
+  /// `Layer`.
   ///
-  /// This number will equal zero if this `Layer` is an input `Layer`.
-  ///
-  /// [learningRate] - A value between 0 (exclusive) and 1 (inclusive) that indicates how sensitive
-  /// this `Layer`'s `Neuron`s are to adjustments of their [weights].
+  /// [learningRate] - A value between 0 (exclusive) and 1 (inclusive),
+  /// indicating how sensitive the `Neurons` within this `Layer` are to
+  /// adjustments of their weights.
   void initialise({
     required int parentLayerSize,
     required double learningRate,
@@ -61,19 +64,21 @@ class Layer {
       size,
       (_) => Neuron(
         activationAlgorithm: activation,
-        parentNeuronCount: parentLayerSize,
+        parentLayerSize: parentLayerSize,
         learningRate: learningRate,
       ),
     ));
   }
 
-  /// Accept a single [input] or multiple [inputs] by assigning them to every of this `Layer`'s `Neuron`'s [inputs].
+  /// Accept a single input or multiple [inputs] by assigning them sequentially
+  /// to the inputs of the `Neurons` housed within this `Layer`.
   ///
-  /// If [isInput] is true, each `Neuron` in this `Layer` will only accept a single input corresponding
-  /// to its index in the [neurons] list.
+  /// If [isInput] is equal to true, each `Neuron` within this `Layer` will only
+  /// accept a single input corresponding to its index within the [neurons]
+  /// list.
   void accept(List<double> inputs) {
     if (isInput) {
-      for (int index = 0; index < neurons.length; index++) {
+      for (var index = 0; index < neurons.length; index++) {
         neurons[index].accept(input: inputs[index]);
       }
       return;
@@ -84,17 +89,18 @@ class Layer {
     }
   }
 
-  /// Adjust weights of each `Neuron` based on its respective [weightMargin] and return
-  /// new [weightMargins] for the previous `Layer` (We are moving backwards during propagation).
+  /// Adjusts weights of each `Neuron` based on its respective weight margin,
+  /// and returns the new [weightMargins] for the previous `Layer` (We are
+  /// moving backwards during propagation).
   List<double> propagate(List<double> weightMargins) {
-    final List<List<double>> newWeightMargins = [];
+    final newWeightMargins = <List<double>>[];
 
     for (final neuron in neurons) {
       newWeightMargins
           .add(neuron.adjust(weightMargin: weightMargins.removeAt(0)));
     }
 
-    return newWeightMargins.reduce((a, b) => add(a, b));
+    return newWeightMargins.reduce(add);
   }
 
   /// Returns a list of this `Layer`'s `Neuron`s' outputs

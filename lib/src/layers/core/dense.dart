@@ -1,14 +1,12 @@
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/layers/layer.dart';
 
-/// `Layer` in which all `Neurons` are connected to all `Neurons` in the previous `Layer`
+/// A `Layer` in which every `Neuron` is connected to every other `Neurons` in
+/// the preceding `Layer`.
 class Dense extends Layer {
-  /// Construct a dense layer using the [activation] and [size]
+  /// Construct a dense layer using the [activation] algorithm and [size].
   Dense({
     required int size,
     required ActivationAlgorithm activation,
-  }) : super(
-    size: size,
-    activation: activation,
-  );
+  }) : super(size: size, activation: activation);
 }

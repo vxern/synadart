@@ -1,14 +1,15 @@
-/// Converts seconds to an Estimated Time of Arrival string
+/// Converts seconds to an estimated time of arrival (ETA) string.
 String secondsToETA(int seconds) {
-  String eta = '';
+  var eta = '';
 
-  // Break down the total number of seconds into larger units of time
-  int hours = seconds ~/ (60 * 60);
-  seconds -= hours * (60 * 60);
-  int minutes = seconds ~/ 60;
-  seconds -= minutes * 60;
+  // Compose the total number of seconds into larger units of time.
+  var secondsSink = seconds;
+  final hours = seconds ~/ (60 * 60);
+  secondsSink -= hours * (60 * 60);
+  final minutes = seconds ~/ 60;
+  secondsSink -= minutes * 60;
 
-  // Append a zero to single-digit time representations
+  // Append a zero to single-digit time representations.
   if (hours < 10) {
     eta += '0';
   }
@@ -19,10 +20,9 @@ String secondsToETA(int seconds) {
   }
   eta += '$minutes:';
 
-  if (seconds < 10) {
+  if (secondsSink < 10) {
     eta += '0';
   }
-  eta += '$seconds';
 
-  return eta;
+  return eta += '$secondsSink';
 }

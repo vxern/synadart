@@ -1,3 +1,10 @@
+# 0.4.3
+
+- Bumped version of `sprint` from `1.0.2+3` to `1.0.3`.
+- Updated repository, homepage and issue tracker links.
+- Refactored and made formatting and style changes to bring the project up to
+  par.
+
 # 0.4.2+1
 
 - Updated package description.

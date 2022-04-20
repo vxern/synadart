@@ -2,33 +2,43 @@ import 'package:sprint/sprint.dart';
 
 import 'package:synadart/src/layers/layer.dart';
 
-/// Representation of a Neural Network, which contains `Layers`, each containing a number of `Neurons`. A `Network` takes
-/// an input in the form of several entries and returns an output by processing the data, passing the data through each
-/// layer.
+/// Representation of a neural network containing `Layers`, which each further
+/// house a number of `Neurons`.  A `Network` takes an input in the form of
+/// several entries and returns an output by processing the data by running the
+/// data through the layers.
 ///
-/// `Network`s must have a training mixin in order to be able to learn.
+/// In order to train a `Network`, the selected `Network` must have a training
+/// algorithm mixed into it - most commonly `Backpropagation`.
 class Network {
-  /// Used for performance analysis as well as general information logging
+  /// Used for performance analysis as well as general information logging.
   final Stopwatch stopwatch = Stopwatch();
 
+  /// `Sprint` instance for logging messages.
   final Sprint log = Sprint('Network');
 
-  /// List containing the `Layers` inside this `Network`.
+  /// The `Layers` part of this `Network`.
   final List<Layer> layers = [];
 
+  /// The degree of radicality at which the `Network` will adjust its `Neurons`
+  /// weights.
   double learningRate;
 
-  /// Creates a `Network` with optional `Layers`
+  /// Creates a `Network` with optional `Layers`.
+  ///
+  /// [learningRate] - The level of aggressiveness at which this `Network` will
+  /// adjust its `Neurons`' weights during training.
+  ///
+  /// [layers] - (Optional) The `Layers` of this `Network`.
   Network({required this.learningRate, List<Layer>? layers}) {
     if (layers != null) {
       addLayers(layers);
     }
   }
 
-  /// Processes [inputs], propagating them across every `Layer`, processing each `Layer` one-by-one
+  /// Processes the [inputs] by propagating them across every `Layer`.
   /// and returns the output.
   List<double> process(List<double> inputs) {
-    List<double> output = inputs;
+    var output = inputs;
 
     for (final layer in layers) {
       layer.accept(output);
@@ -38,7 +48,7 @@ class Network {
     return output;
   }
 
-  /// Adds a `Layer` to this `Network`
+  /// Adds a `Layer` to this `Network`.
   void addLayer(Layer layer) {
     layer.initialise(
         parentLayerSize: layers.isEmpty ? 0 : layers[layers.length - 1].size,
@@ -49,17 +59,18 @@ class Network {
     log.info('Added layer of size ${layer.neurons.length}.');
   }
 
-  /// Adds a list of `Layers` to this `Network`
+  /// Adds a list of `Layers` to this `Network`.
   void addLayers(List<Layer> layers) {
     for (final layer in layers) {
       addLayer(layer);
     }
   }
 
-  /// Resets the `Network` by removing all `Layers`
-  void reset() {
+  /// Clears the `Network` by removing all `Layers`, thereby returning it to its
+  /// initial, empty state.
+  void clear() {
     if (layers.isEmpty) {
-      log.warning('Attempted to reset an already empty network');
+      log.warning('Attempted to reset an already empty network.');
       return;
     }
 
