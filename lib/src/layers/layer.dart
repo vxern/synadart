@@ -60,14 +60,16 @@ class Layer {
   }) {
     isInput = parentLayerSize == 0;
 
-    neurons.addAll(Iterable.generate(
-      size,
-      (_) => Neuron(
-        activationAlgorithm: activation,
-        parentLayerSize: parentLayerSize,
-        learningRate: learningRate,
+    neurons.addAll(
+      Iterable.generate(
+        size,
+        (_) => Neuron(
+          activationAlgorithm: activation,
+          parentLayerSize: parentLayerSize,
+          learningRate: learningRate,
+        ),
       ),
-    ));
+    );
   }
 
   /// Accept a single input or multiple [inputs] by assigning them sequentially

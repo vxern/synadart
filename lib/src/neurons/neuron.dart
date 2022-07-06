@@ -116,7 +116,7 @@ class Neuron {
     }
 
     if (this.inputs.isNotEmpty) {
-      this.inputs[0] = input!;
+      this.inputs.first = input!;
     } else {
       this.inputs.add(input!);
     }
@@ -142,5 +142,5 @@ class Neuron {
   /// it will output the weighted sum of the [inputs] and [weights], passed
   /// through the activation function.
   double get output =>
-      weights.isEmpty ? inputs[0] : activation(() => dot(inputs, weights));
+      weights.isEmpty ? inputs.first : activation(() => dot(inputs, weights));
 }

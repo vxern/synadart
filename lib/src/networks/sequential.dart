@@ -1,4 +1,3 @@
-import 'package:synadart/src/layers/layer.dart';
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/networks/training/backpropagation.dart';
 
@@ -7,7 +6,7 @@ import 'package:synadart/src/networks/training/backpropagation.dart';
 class Sequential extends Network with Backpropagation {
   /// Creates a `Sequential` model network.
   Sequential({
-    required double learningRate,
-    List<Layer>? layers,
-  }) : super(learningRate: learningRate, layers: layers);
+    required super.learningRate,
+    super.layers,
+  });
 }

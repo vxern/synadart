@@ -28,14 +28,14 @@ const algorithms = <ActivationAlgorithm, List<ActivationFunctionSignature>>{
 ActivationFunction resolveActivationAlgorithm(
   ActivationAlgorithm activationAlgorithm,
 ) =>
-    (weightedSum) => algorithms[activationAlgorithm]![0](weightedSum());
+    (weightedSum) => algorithms[activationAlgorithm]!.first(weightedSum());
 
 /// Resolves an `ActivationAlgorithm` to the derivative of the mathematical
 /// function in the form of an `ActivationFunction`
 ActivationFunction resolveActivationDerivative(
   ActivationAlgorithm activationAlgorithm,
 ) =>
-    (weightedSum) => algorithms[activationAlgorithm]![1](weightedSum());
+    (weightedSum) => algorithms[activationAlgorithm]!.last(weightedSum());
 
 /// Shrinks the range of values to inbetween 0 and 1 using exponentials. Results
 /// can be driven into saturation, which makes the sigmoid function unsuited for

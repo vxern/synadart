@@ -1,20 +1,20 @@
 name: synadart
-version: 0.4.3
+version: 0.4.4
 
 description: >-
-  A simple-to-grasp, complete and fully documented Neural Network library, 
-  written from scratch in Dart.
+  A limited but fully documented neural network library created for educational
+  purposes.
 
 homepage: https://github.com/wordcollector/synadart
 repository: https://github.com/wordcollector/synadart
 issue_tracker: https://github.com/wordcollector/synadart/issues
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
 
 dependencies:
   # Logging
-  sprint: ^1.0.3
+  sprint: ^1.0.4
 
 dev_dependencies:
-  words: ^0.0.2+1
+  words: ^0.1.1

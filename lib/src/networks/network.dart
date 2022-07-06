@@ -51,8 +51,9 @@ class Network {
   /// Adds a `Layer` to this `Network`.
   void addLayer(Layer layer) {
     layer.initialise(
-        parentLayerSize: layers.isEmpty ? 0 : layers[layers.length - 1].size,
-        learningRate: learningRate);
+      parentLayerSize: layers.isEmpty ? 0 : layers.last.size,
+      learningRate: learningRate,
+    );
 
     layers.add(layer);
 

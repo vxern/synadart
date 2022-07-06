@@ -42,7 +42,8 @@ mixin Backpropagation on Network {
 
     if (inputs.length != expected.length) {
       log.severe(
-          'Inputs and expected result lists must be of the same length.');
+        'Inputs and expected result lists must be of the same length.',
+      );
       return;
     }
 
@@ -66,14 +67,19 @@ mixin Backpropagation on Network {
 
     for (var iteration = 0; iteration < iterations; iteration++) {
       stopwatch.start();
+
       for (var index = 0; index < inputs.length; index++) {
         propagateBackwards(inputs[index], expected[index]);
       }
+
       stopwatch.stop();
+
       if (iteration % 500 == 0) {
         log.info(
-            'Iterations: $iteration/$iterations ~ ETA: ${secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}');
+          'Iterations: $iteration/$iterations ~ ETA: ${secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}',
+        );
       }
+
       stopwatch.reset();
     }
   }

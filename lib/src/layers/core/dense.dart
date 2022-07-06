@@ -6,7 +6,7 @@ import 'package:synadart/src/layers/layer.dart';
 class Dense extends Layer {
   /// Construct a dense layer using the [activation] algorithm and [size].
   Dense({
-    required int size,
-    required ActivationAlgorithm activation,
-  }) : super(size: size, activation: activation);
+    required super.size,
+    required super.activation,
+  });
 }

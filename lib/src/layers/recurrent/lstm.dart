@@ -22,16 +22,10 @@ class LSTM extends Layer {
   /// [recurrenceActivation] - Algorithm used to activate recurrence
   /// connections.
   LSTM({
-    required int size,
-    required ActivationAlgorithm activation,
+    required super.size,
+    required super.activation,
     required ActivationAlgorithm recurrenceActivation,
-  }) : super(
-          size: size,
-          activation: activation,
-        ) {
-    this.recurrenceActivation =
-        resolveActivationAlgorithm(recurrenceActivation);
-  }
+  }) : recurrenceActivation = resolveActivationAlgorithm(recurrenceActivation);
 
   /// Obtain the output by applying the recurrent memory algorithm.
   @override

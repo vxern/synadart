@@ -1,3 +1,9 @@
+# 0.4.4
+
+- Update SDK version from `2.12.0` to `2.17.0`.
+- Updated project description to make it more accurate in describing what
+  `synadart` actually is.
+
 # 0.4.3
 
 - Bumped version of `sprint` from `1.0.2+3` to `1.0.3`.

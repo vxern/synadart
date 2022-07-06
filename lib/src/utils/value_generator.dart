@@ -16,6 +16,9 @@ Iterable<double> doubleIterableSync({double from = 0, double to = 0}) sync* {
 }
 
 /// Generates a list of size [size], filled with random `double` values.
-List<double> generateListWithRandomDoubles(
-        {required int size, double from = 0, double to = 0}) =>
+List<double> generateListWithRandomDoubles({
+  required int size,
+  double from = 0,
+  double to = 0,
+}) =>
     doubleIterableSync(from: from, to: to).take(size).toList();
