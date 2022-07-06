@@ -1,4 +1,3 @@
-import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/layers/layer.dart';
 
 /// A `Layer` in which every `Neuron` is connected to every other `Neurons` in
