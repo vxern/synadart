@@ -1,3 +1,7 @@
+# 0.4.5
+
+- Relicensed from GPLv3 to MIT.
+
 # 0.4.4
 
 - Update SDK version from `2.12.0` to `2.17.0`.
