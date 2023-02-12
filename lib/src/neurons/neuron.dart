@@ -121,7 +121,7 @@ class Neuron {
     learningRate = json[_fieldLearningRate] as double;
 
     final activationIndex = json[_fieldActivationAlgorithm] as int;
-    final activationAlgorithm = ActivationAlgorithm.values[activationIndex];
+    activationAlgorithm = ActivationAlgorithm.values[activationIndex];
     activation = resolveActivationAlgorithm(activationAlgorithm);
     activationPrime = resolveActivationDerivative(activationAlgorithm);
   }
