@@ -1,20 +1,16 @@
 name: synadart
-version: 0.4.5
+version: 0.5.0
 
 description: >-
   A limited but fully documented neural network library created for educational
   purposes.
 
-homepage: https://github.com/wordcollector/synadart
-repository: https://github.com/wordcollector/synadart
-issue_tracker: https://github.com/wordcollector/synadart/issues
+homepage: https://github.com/vxern/synadart
+repository: https://github.com/vxern/synadart
+issue_tracker: https://github.com/vxern/synadart/issues
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
-
-dependencies:
-  # Logging
-  sprint: ^1.0.4
+  sdk: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
-  words: ^0.1.1
+  words: ^0.4.4

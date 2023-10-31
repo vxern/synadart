@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:synadart/src/networks/network.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
-import 'package:synadart/src/utils/utils.dart';
 
 /// Extension to `Network` that allows it to train by performing
 /// backpropagation.
@@ -29,58 +26,44 @@ mixin Backpropagation on Network {
   ///
   /// [iterations] - How many times the `Network` should perform backpropagation
   /// using the provided inputs and expected values.
+  ///
+  /// ⚠️ Throws a [FormatException] if the:
+  /// - The [inputs] and [expected] vectors are empty.
+  /// - The [inputs] and [expected] vectors are of different sizes.
+  /// - The number of iterations is less than 1.
   void train({
     required List<List<double>> inputs,
     required List<List<double>> expected,
     required int iterations,
+    @Deprecated(
+      'The package no longer logs messages, thus the quiet mode no longer '
+      'serves a purpose.',
+    )
     bool quiet = false,
   }) {
     if (inputs.isEmpty || expected.isEmpty) {
-      log.severe('Both inputs and expected results must not be empty.');
-      exit(0);
+      throw const FormatException(
+        'Both inputs and expected results must not be empty.',
+      );
     }
 
     if (inputs.length != expected.length) {
-      log.severe(
+      throw const FormatException(
         'Inputs and expected result lists must be of the same length.',
       );
-      return;
     }
 
     if (iterations < 1) {
-      log.severe(
+      throw const FormatException(
         'You cannot train a network without granting it at least one '
         'iteration.',
       );
-      return;
-    }
-
-    // Perform backpropagation without any additional metrics overhead
-    if (quiet) {
-      for (var iteration = 0; iteration < iterations; iteration++) {
-        for (var index = 0; index < inputs.length; index++) {
-          propagateBackwards(inputs[index], expected[index]);
-        }
-      }
-      return;
     }
 
     for (var iteration = 0; iteration < iterations; iteration++) {
-      stopwatch.start();
-
       for (var index = 0; index < inputs.length; index++) {
         propagateBackwards(inputs[index], expected[index]);
       }
-
-      stopwatch.stop();
-
-      if (iteration % 500 == 0) {
-        log.info(
-          'Iterations: $iteration/$iterations ~ ETA: ${secondsToETA((stopwatch.elapsedMicroseconds * (iterations - iteration)) ~/ 1000000)}',
-        );
-      }
-
-      stopwatch.reset();
     }
   }
 }

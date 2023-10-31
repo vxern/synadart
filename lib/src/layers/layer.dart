@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:sprint/sprint.dart';
-
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/neurons/neuron.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
@@ -10,9 +6,6 @@ import 'package:synadart/src/utils/mathematical_operations.dart';
 /// 'column' of `Neurons` that can be manipulated through accepting new data and
 /// trained.
 class Layer {
-  /// `Sprint` instance for logging messages.
-  final Sprint log = Sprint('Layer');
-
   /// The algorithm used for activating `Neurons`.
   final ActivationAlgorithm activation;
 
@@ -33,13 +26,14 @@ class Layer {
   ///
   /// [activation] - The algorithm used for determining how active `Neurons` are
   /// contained within this layer.
+  ///
+  /// ⚠️ Throws a [FormatException] if the size of the layer is less than 1.
   Layer({
     required this.size,
     required this.activation,
   }) {
     if (size < 1) {
-      log.severe('A layer must contain at least one neuron.');
-      exit(0);
+      throw const FormatException('A layer must contain at least one neuron.');
     }
   }
 

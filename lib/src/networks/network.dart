@@ -1,5 +1,3 @@
-import 'package:sprint/sprint.dart';
-
 import 'package:synadart/src/layers/layer.dart';
 
 /// Representation of a neural network containing `Layers`, which each further
@@ -12,9 +10,6 @@ import 'package:synadart/src/layers/layer.dart';
 class Network {
   /// Used for performance analysis as well as general information logging.
   final Stopwatch stopwatch = Stopwatch();
-
-  /// `Sprint` instance for logging messages.
-  final Sprint log = Sprint('Network');
 
   /// The `Layers` part of this `Network`.
   final List<Layer> layers = [];
@@ -56,8 +51,6 @@ class Network {
     );
 
     layers.add(layer);
-
-    log.info('Added layer of size ${layer.neurons.length}.');
   }
 
   /// Adds a list of `Layers` to this `Network`.
@@ -69,15 +62,14 @@ class Network {
 
   /// Clears the `Network` by removing all `Layers`, thereby returning it to its
   /// initial, empty state.
+  ///
+  /// ⚠️ Throws a [StateError] if the network has already been cleared.
   void clear() {
     if (layers.isEmpty) {
-      log.warning('Attempted to reset an already empty network.');
-      return;
+      throw StateError('Attempted to reset an already empty network.');
     }
 
     stopwatch.reset();
     layers.clear();
-
-    log.success('Network reset successfully.');
   }
 }

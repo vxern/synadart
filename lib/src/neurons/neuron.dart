@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'dart:math';
-
-import 'package:sprint/sprint.dart';
 
 import 'package:synadart/src/activation.dart';
 import 'package:synadart/src/utils/mathematical_operations.dart';
@@ -12,9 +9,6 @@ import 'package:synadart/src/utils/value_generator.dart';
 /// basic of which being the taking of the weighted sum of [inputs] and
 /// [weights], and passing it on to the next `Neuron`.
 class Neuron {
-  /// `Sprint` instance for logging messages.
-  final Sprint log = Sprint('Neuron');
-
   /// The activation algorithm used for determining this `Neuron`'s level of
   /// activation.
   late final ActivationFunction activation;
@@ -60,6 +54,10 @@ class Neuron {
   /// [weights] - (Optional) Weights of connections to `Neuron`s in the previous
   /// `Layer`.  If the [weights] aren't provided, they will be generated
   /// randomly.
+  ///
+  /// ⚠️ Throws a [FormatException] if the number of weights supplied to this
+  /// neuron does not match the number of connections to neurons in the parent
+  /// layer.
   Neuron({
     required ActivationAlgorithm activationAlgorithm,
     required int parentLayerSize,
@@ -90,11 +88,10 @@ class Neuron {
     }
 
     if (weights.length != parentLayerSize) {
-      log.severe(
+      throw const FormatException(
         'The number of weights supplied to this neuron does not match the '
         'number of connections to neurons in the parent layer.',
       );
-      exit(0);
     }
 
     // ignore: prefer_initializing_formals
@@ -104,10 +101,11 @@ class Neuron {
 
   /// Accepts a single [input] or multiple [inputs] by assigning them to the
   /// [inputs] of this `Neuron`.
+  ///
+  /// ⚠️ Throws a [FormatException] if both [inputs] and [input] are `null`.
   void accept({List<double>? inputs, double? input}) {
     if (inputs == null && input == null) {
-      log.severe('Attempted to accept without any inputs.');
-      exit(0);
+      throw const FormatException('Attempted to accept without any inputs.');
     }
 
     if (!isInput && inputs != null) {

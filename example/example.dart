@@ -16,7 +16,7 @@ void main() {
       Dense(
         size: 1,
         activation: ActivationAlgorithm.sigmoid,
-      )
+      ),
     ],
   );
 
